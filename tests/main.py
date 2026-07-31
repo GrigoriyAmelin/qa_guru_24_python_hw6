@@ -6,8 +6,8 @@ email_test = {"subject": "Story telling  ",
          "recipient": "   8762-Orley-WY-MrSmith@yandex.ru  ",
          "body": "Somebody wrote about this story, so that, finally, \tYou should do it wright now Jhonny!\n"}
 
-send_date = datetime.datetime.now().strftime("%Y-%m-%d")
-email_test["date"] = send_date
+# send_date = datetime.datetime.now().strftime("%Y-%m-%d")
+# email_test["date"] = send_date
 
 ### Функции для реализации:
 # 1. Нормализация email адресов - приводит адреса к нижнему регистру и убирает пробелы
@@ -37,8 +37,8 @@ print(f'2. Email after reducing: "{add_short_body(email_test)}"')
 
 
 # 3. Очистка текста письма - заменяет табы и переводы строк на пробелы
-def clean_body_text(text: str) -> str:
-    clean_body = text.replace("\n", "").replace("\t", "").replace("  ", " ")
+def clean_body_text(email_text: str) -> str:
+    clean_body = email_text.replace("\n", "").replace("\t", "").replace("  ", " ")
     return clean_body
 
     """
@@ -46,7 +46,7 @@ def clean_body_text(text: str) -> str:
     """
 
 email_test['clean_body'] = clean_body_text(email_test['body'])
-print(f'3. Body text after cleaning: "{clean_body_text(email_test['body'])}"')
+print(f'3. Body text after cleaning: "{email_test['clean_body']}"')
 
 
 # 4. Формирование итогового текста письма - создает форматированный текст письма
@@ -102,7 +102,7 @@ def get_correct_email(email_list: list[str]) -> list[str]:
     for element in email_list:
         element = element.lower().strip()
         if element.endswith(extentions) and "@" in element:
-            if element.partition('@')[0]:
+            if element.partition('@')[0] and element.partition('@')[2].partition('.')[0]:
                 correct_email_list.append(element)
     duplicate_removed_email_list = list(set(correct_email_list))
     return duplicate_removed_email_list
@@ -145,20 +145,22 @@ def create_email(sender: str, recipient: str, subject: str, body: str) -> dict:
     'sender', 'recipient', 'subject', 'body'
     """
 
-print(f'8. Created email: {create_email('Sender', 'Recepient', 'Subject', 'Body')}')
+new_created_email = create_email('Sender', 'Recepient', 'Subject', 'Body')
+print(f'8. Created email: {new_created_email}')
 
 
 # 9. Добавление даты отправки - добавляет текущую дату
 def add_send_date(email: dict) -> dict:
-    send_date = datetime.datetime.now().strftime("%Y-%m-%d")
-    email["date"] = send_date
+    send_date_field = datetime.datetime.now().strftime("%Y-%m-%d")
+    email["date"] = send_date_field
     return email
 
     """
     Возвращает email с добавленным ключом email["date"] — текущая дата в формате YYYY-MM-DD.
     """
 
-print(f'9. Email with send date: {add_send_date(email_test)}')
+email_with_send_date = add_send_date(email_test)
+print(f'9. Email with send date: {email_with_send_date}')
 
 
 # 10. Получение логина и домена - разделяет email на логин и домен
@@ -172,9 +174,9 @@ def extract_login_domain(address: str) -> tuple[str, str]:
     Возвращает логин и домен отправителя.
     Пример: "user@mail.ru" -> ("user", "mail.ru")
     """
-
-print(f'10. User login: {extract_login_domain(email_test['sender'])[0]}, '
-      f'user domain: {extract_login_domain(email_test['sender'])[1]}')
+email_login, email_domain = extract_login_domain(email_test['sender'])
+print(f'10. User login: {email_login}, '
+      f'user domain: {email_domain}')
 
 ## Часть B. Отправка письма
 # Создать функцию отправки письма с валидацией и обработкой. Функция принимает список получателей, тему, сообщение и отправителя.
@@ -240,6 +242,7 @@ def sender_email(recipient_list: list[str], subject: str, message: str, *, sende
 
 ### Результат:
 # Список с готовыми письмами, содержащими все обработанные данные.
-for result in sender_email(['erer@EEya.us', '@rt.ru', 'qwe45RRRRer@er.ru ', ' fg@.com'],"  Theme  ",
+for result in sender_email(['erer@EEya.us', 'DSpeQ@rt.net', 'qwe45RRRRer@er.ru ', ' fg@.com', ' fg@Qwer.com'],
+                           "  Theme to test something for you...  ",
                            "All is OK but you don't know"):
     print(result)
