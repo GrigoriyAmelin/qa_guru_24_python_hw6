@@ -1,5 +1,8 @@
 # Создайте набор функций для обработки информации о письме. Каждая функция должна выполнять ровно одно действие и возвращать результат.
 import datetime
+from pprint import pprint
+
+from pyexpat.errors import messages
 
 email_test = {"subject": "Story telling  ",
          "sender": "12345ZionCAMichaelLanda@dot.com ",
@@ -236,13 +239,16 @@ def sender_email(recipient_list: list[str], subject: str, message: str, *, sende
         email['masked_sender'] = mask_sender_email(login, domain)
         email['clean_body'] = clean_body
         email = add_short_body(email)
-        email = build_sent_text(email)
+        sent_text = build_sent_text(email)
+        email['sent_text'] = sent_text
         recipient_emails.append(email)
     return recipient_emails
 
 ### Результат:
 # Список с готовыми письмами, содержащими все обработанные данные.
-for result in sender_email(['erer@EEya.us', 'DSpeQ@rt.net', 'qwe45RRRRer@er.ru ', ' fg@.com', ' fg@Qwer.com'],
-                           "  Theme to test something for you...  ",
-                           "All is OK but you don't know"):
-    print(result)
+recipient_list = ['erer@EEya.us', 'DSpeQ@rt.net', 'qwe45RRRRer@er.ru ', ' fg@.com', ' fg@Qwer.com']
+subject = '  Theme to test something for you...  '
+message = 'All is OK but you don\'t know'
+result = sender_email(recipient_list, subject, message)
+
+pprint(result)
