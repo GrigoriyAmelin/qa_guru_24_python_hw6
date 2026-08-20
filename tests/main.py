@@ -246,7 +246,7 @@ def sender_email(recipient_list: list[str], subject: str, message: str, *, sende
 
 ### Результат:
 # Список с готовыми письмами, содержащими все обработанные данные.
-recipient_list = ['erer@EEya.us', 'DSpeQ@rt.net', 'qwe45RRRRer@er.ru ', ' fg@.com', ' fg@Qwer.com', 'new_mail@tre.com']
+recipient_list = ['erer@EEya.us', 'DSpeQ@rt.net', 'qwe45RRRRer@er.ru ', ' fg@.com', ' fg@Qwer.com', 'new_mailer@tre.com']
 subject = '  Theme to test something for you...  '
 message = 'All is OK but you don\'t know'
 result = sender_email(recipient_list, subject, message)
